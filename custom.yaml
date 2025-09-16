@@ -1,0 +1,55 @@
+version: 2
+name: custom
+displayName: Custom MCP Servers
+registry:
+  bloodyad-assistant:
+    description: "bloodyAD wrapper MCP server for AD abuse and enumeration"
+    title: "bloodyad-assistant"
+    type: server
+    dateAdded: "2025-08-26T00:00:00Z"
+    image: bloodyad-assistant-mcp-server:latest
+    ref: ""
+    readme: ""
+    toolsUrl: ""
+    source: ""
+    upstream: ""
+    icon: ""
+    tools:
+      - name: bloodyad_raw
+      - name: bloodyad_get_object
+      - name: bloodyad_get_children
+      - name: bloodyad_get_dnsdump
+      - name: bloodyad_get_membership
+      - name: bloodyad_get_writable
+      - name: bloodyad_get_search
+      - name: bloodyad_get_trusts
+      - name: bloodyad_set_object
+      - name: bloodyad_set_owner
+      - name: bloodyad_set_password
+      - name: bloodyad_set_restore
+      - name: bloodyad_add_computer
+      - name: bloodyad_add_dcsync
+      - name: bloodyad_add_dnsRecord
+      - name: bloodyad_add_genericAll
+      - name: bloodyad_add_groupMember
+      - name: bloodyad_add_rbcd
+      - name: bloodyad_add_shadowCredentials
+      - name: bloodyad_add_uac
+      - name: bloodyad_add_user
+      - name: bloodyad_remove_dcsync
+      - name: bloodyad_remove_dnsRecord
+      - name: bloodyad_remove_genericAll
+      - name: bloodyad_remove_groupMember
+      - name: bloodyad_remove_object
+      - name: bloodyad_remove_rbcd
+      - name: bloodyad_remove_shadowCredentials
+      - name: bloodyad_remove_uac
+    secrets: []
+    metadata:
+      category: automation
+      tags:
+        - active-directory
+        - bloodyad
+        - pentest
+      license: MIT
+      owner: local
