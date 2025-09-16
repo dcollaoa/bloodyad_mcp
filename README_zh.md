@@ -8,6 +8,8 @@
 
 # bloodyad-mcp
 
+本项目是优秀工具 [bloodyAD](https://github.com/CravateRouge/bloodyAD) 的一个包装器。
+
 一个模型上下文协议 (MCP) 服务器，作为 bloodyAD 的包装器，允许从 Claude Desktop、Gemini-CLI 或其他 MCP 前端灵活自动化地进行 Active Directory 枚举和滥用。
 
 ---

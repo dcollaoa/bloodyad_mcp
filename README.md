@@ -8,6 +8,8 @@
 
 # bloodyad-mcp
 
+This project is a wrapper for the excellent [bloodyAD](https://github.com/CravateRouge/bloodyAD) tool.
+
 A Model Context Protocol (MCP) server that acts as a wrapper for bloodyAD, allowing flexible and automated Active Directory enumeration and abuse from Claude Desktop, Gemini-CLI, or other MCP frontends.
 
 ---
