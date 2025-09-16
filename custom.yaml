@@ -2,12 +2,12 @@ version: 2
 name: custom
 displayName: Custom MCP Servers
 registry:
-  bloodyad-assistant:
+  bloodyad-mcp:
     description: "bloodyAD wrapper MCP server for AD abuse and enumeration"
-    title: "bloodyad-assistant"
+    title: "bloodyad-mcp"
     type: server
     dateAdded: "2025-08-26T00:00:00Z"
-    image: bloodyad-assistant-mcp-server:latest
+    image: bloodyad-mcp:latest
     ref: ""
     readme: ""
     toolsUrl: ""

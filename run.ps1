@@ -1,12 +1,12 @@
 <#
     .SYNOPSIS
-        An improved script to automate the setup for the bloodyAD MCP Server.
+        script to automate the setup for the bloodyAD MCP Server with GEMINI-CLI.
     .DESCRIPTION
         This script guides the user through building the Docker image,
         configuring MCP files, safely updating only the required key in the 
         Gemini settings.json file, and finally prompts to run Gemini.
     .AUTHOR
-        3KY / ChatGPT (Refactored by Gemini)
+        3ky
 #>
 
 [CmdletBinding()]
@@ -58,17 +58,17 @@ function Show-Banner {
 
 function Invoke-DockerSetup {
     Write-Step "Step 1: Building Docker image"
-    docker build -t bloodyad-assistant-mcp-server .
+    docker build -t bloodyad-mcp .
     if ($LASTEXITCODE -ne 0) {
         Write-Status "Docker build failed. Exiting." -Status 'Failed'
         exit 1
     }
-    Write-Status "Docker image 'bloodyad-assistant-mcp-server' built successfully."
+    Write-Status "Docker image 'bloodyad-mcp' built successfully."
 
     $Choice = Read-Host "> Do you want to run a container for an interactive test? (y/N)"
     if ($Choice -eq 'y') {
         Write-Status "Starting container. Type 'exit' to continue the script." -Status 'Info'
-        docker run --rm -it bloodyad-assistant-mcp-server /bin/bash
+        docker run --rm -it bloodyad-mcp /bin/bash
     }
 }
 
@@ -105,12 +105,12 @@ function Set-McpConfiguration {
     }
     
     $regContent = Get-Content $RegistryYaml -Raw
-    if ($regContent -match 'bloodyad-assistant:') {
-        Write-Status "Entry for 'bloodyad-assistant' already exists in registry.yaml." -Status 'Warning'
+    if ($regContent -match 'bloodyad-mcp:') {
+        Write-Status "Entry for 'bloodyad-mcp' already exists in registry.yaml." -Status 'Warning'
     } else {
         $bloodyAdEntry = @"
 
-  bloodyad-assistant:
+  bloodyad-mcp:
     ref: ""
 "@
         if ($regContent -match 'registry:') {
@@ -165,7 +165,7 @@ function Update-GeminiSettings {
         
         $settings.mcpServers | Add-Member -MemberType NoteProperty -Name 'mcp-toolkit-gateway' -Value $mcpGateway -Force
 
-        # FINAL CORRECTION: Use -Compress to create a minified, single-line JSON with no extra whitespace.
+        # Using -Compress to create a minified, single-line JSON with no extra whitespace. (TODO FIX IT)
         $jsonOutput = $settings | ConvertTo-Json -Depth 10 -Compress
         $utf8WithoutBom = [System.Text.UTF8Encoding]::new($false)
         [System.IO.File]::WriteAllText($SettingsPath, $jsonOutput, $utf8WithoutBom)

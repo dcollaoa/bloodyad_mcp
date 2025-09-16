@@ -6,7 +6,7 @@
 [README (English)](README.md) | [中文文档 (Chinese)](README_zh.md) | [README en Español](README_es.md)
 
 
-# bloodyad-assistant MCP 服务器
+# bloodyad-mcp
 
 一个模型上下文协议 (MCP) 服务器，作为 bloodyAD 的包装器，允许从 Claude Desktop、Gemini-CLI 或其他 MCP 前端灵活自动化地进行 Active Directory 枚举和滥用。
 
@@ -113,7 +113,7 @@ print(default_api.bloodyad_get_search(base='DC=fluffy,DC=htb', filter='(objectCl
 ## 架构
 
 ```
-Gemini-CLI → MCP Gateway → bloodyad-assistant MCP Server → bloodyAD CLI (Kali)
+Gemini-CLI → MCP Gateway → bloodyad-mcp → bloodyAD CLI (Kali)
 ```
 
 ---

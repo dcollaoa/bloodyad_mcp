@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-bloodyAD-assistant MCP Server - Wrapper for bloodyAD CLI on Docker/Kali
+bloodyAD-mcp - Wrapper for bloodyAD CLI on Docker/Kali
 """
 import os
 import sys
@@ -13,9 +13,9 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     stream=sys.stderr
 )
-logger = logging.getLogger("bloodyad-assistant-server")
+logger = logging.getLogger("bloodyad-mcp-server")
 
-mcp = FastMCP("bloodyad-assistant")
+mcp = FastMCP("bloodyad-mcp")
 
 BLOODYAD_PATH = "/tools/bloodyAD/bloodyAD.py"
 PYTHON_VENV_BIN = "/venv/bin/python"
@@ -462,7 +462,7 @@ async def bloodyad_remove_uac(host: str = "", domain: str = "", user: str = "", 
     return _run_bloodyad(host=host, domain=domain, user=user, password=password, bloodyad_command_args=bloodyad_command_args)
 
 if __name__ == "__main__":
-    logger.info("Starting bloodyad-assistant MCP server...")
+    logger.info("Starting bloodyad-mcp server...")
     try:
         mcp.run(transport='stdio')
     except Exception as e:

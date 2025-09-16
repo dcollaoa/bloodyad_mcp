@@ -6,7 +6,7 @@
 [README (English)](README.md) | [中文文档 (Chinese)](README_zh.md) | [README en Español](README_es.md)
 
 
-# bloodyad-assistant MCP Server
+# bloodyad-mcp
 
 Un servidor Model Context Protocol (MCP) que actúa como wrapper para bloodyAD, permitiendo enumeración y abuso de Active Directory de forma flexible y automatizada desde Claude Desktop, Gemini-CLI u otros frontends MCP.
 
@@ -113,7 +113,7 @@ print(default_api.bloodyad_add_user(samAccountName='NewUser', newpass='NewUserPa
 ## Arquitectura
 
 ```
-Gemini-CLI → MCP Gateway → bloodyad-assistant MCP Server → bloodyAD CLI (Kali)
+Gemini-CLI → MCP Gateway → bloodyad-mcp → bloodyAD CLI (Kali)
 ```
 
 ---

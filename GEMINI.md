@@ -1,4 +1,4 @@
-# bloodyad-assistant Implementation Notes
+# bloodyad-mcp Implementation Notes
 
 - The server only wraps bloodyAD, no extra tools.
 - Each MCP tool is a wrapper to a common bloodyAD operation (get object, get children, etc).
@@ -69,7 +69,7 @@
 
 ## Examples
 
-Here are some examples of how to use the `bloodyad_assistant` tools:
+Here are some examples of how to use the `bloodyad-mcp` tools:
 
 ### Get bloodyAD help
 ```python
