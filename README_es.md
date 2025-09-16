@@ -101,6 +101,13 @@ Sigue estos pasos para configurar y ejecutar el servidor `bloodyad-mcp`:
         ```
         Este script realizará los mismos pasos de configuración que el script de PowerShell. Recuerda hacerlo ejecutable primero.
 
+    *   **Para Usuarios de macOS:**
+        ```bash
+        chmod +x run_macos.sh
+        ./run_macos.sh
+        ```
+        Este script realizará los mismos pasos de configuración que el script de PowerShell, adaptado para macOS. Recuerda hacerlo ejecutable primero.
+
 ---
 
 ## Ejemplos de Uso

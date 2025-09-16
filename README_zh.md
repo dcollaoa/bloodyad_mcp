@@ -101,6 +101,14 @@
         ```
         此脚本将执行与 PowerShell 脚本相同的设置步骤。请记住先使其可执行。
 
+    *   **对于 macOS 用户:** 
+        ```bash
+        chmod +x run_macos.sh
+        ./run_macos.sh
+        ```
+        此脚本将执行与 PowerShell 脚本相同的设置步骤，并已针对 macOS 进行调整。请记住先使其可执行。
+
+
 ---
 
 ## 使用示例
