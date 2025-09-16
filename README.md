@@ -27,7 +27,7 @@ This server exposes bloodyAD commands through simple Python functions, facilitat
 - **`bloodyad_get_children`** — Lists children of an object (users, groups, computers, OUs).
 - **`bloodyad_get_dnsdump`** — Extracts AD-integrated DNS zones.
 - **`bloodyad_get_membership`** — Gets groups to which the target belongs.
-- **`bloodyad_get_writable` — Lists objects over which the authenticated user has write permissions.
+- **`bloodyad_get_writable`** — Lists objects over which the authenticated user has write permissions.
 - **`bloodyad_get_search`** — Performs advanced searches in the LDAP database.
 - **`bloodyad_get_trusts`** — Displays domain trusts in an ASCII tree.
 
