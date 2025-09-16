@@ -74,6 +74,7 @@ This server exposes bloodyAD commands through simple Python functions, facilitat
 Follow the detailed steps in the official guide (see section 2: installation).
 Build the Docker image and configure it as a custom MCP server.
 
+
 ---
 
 ## Usage Examples
@@ -103,10 +104,10 @@ print(default_api.bloodyad_get_writable(user='fluffy.htb\svc_mssql', password='M
 print(default_api.bloodyad_get_search(base='DC=fluffy,DC=htb', filter='(objectClass=user)', attr='sAMAccountName', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # Change a user's password
-# print(default_api.bloodyad_set_password(target='CN=TestUser,CN=Users,DC=fluffy,DC=htb', newpass='NewSecurePassword123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_set_password(target='CN=TestUser,CN=Users,DC=fluffy,DC=htb', newpass='NewSecurePassword123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # Add a new user
-# print(default_api.bloodyad_add_user(samAccountName='NewUser', newpass='NewUserPass123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_add_user(samAccountName='NewUser', newpass='NewUserPass123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 ```
 
 ---
@@ -137,4 +138,4 @@ Gemini-CLI → MCP Gateway → bloodyad-assistant MCP Server → bloodyAD CLI (K
 ## License
 
 MIT License
-```
+

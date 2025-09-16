@@ -8,7 +8,7 @@
 - All tools sanitize/strip parameters and validate presence of required ones.
 - Server runs as non-root via Docker.
 - Output is exactly as bloodyAD prints (stdout or stderr), including error details for troubleshooting.
-- Uses FastMCP, never @mcp.prompt() or prompt parameter.
+- Uses FastMCP, never mcp.prompt() or prompt parameter.
 - All docstrings are single-line and concise, to avoid gateway errors.
 
 ## Tool List
