@@ -1,3 +1,11 @@
+<p align="center">
+  <img alt="bloodyAD_MCP" src="media/logo.png" height="30%" width="30%">
+</p>
+
+
+[README (English)](README.md) | [中文文档 (Chinese)](README_zh.md) | [README en Español](README_es.md)
+
+
 # bloodyad-assistant MCP Server
 
 Un servidor Model Context Protocol (MCP) que actúa como wrapper para bloodyAD, permitiendo enumeración y abuso de Active Directory de forma flexible y automatizada desde Claude Desktop, Gemini-CLI u otros frontends MCP.
@@ -94,10 +102,10 @@ print(default_api.bloodyad_get_writable(user='fluffy.htb\svc_mssql', password='M
 print(default_api.bloodyad_get_search(base='DC=fluffy,DC=htb', filter='(objectClass=user)', attr='sAMAccountName', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # Cambiar la contraseña de un usuario
-# print(default_api.bloodyad_set_password(target='CN=TestUser,CN=Users,DC=fluffy,DC=htb', newpass='NewSecurePassword123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_set_password(target='CN=TestUser,CN=Users,DC=fluffy,DC=htb', newpass='NewSecurePassword123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # Añadir un nuevo usuario
-# print(default_api.bloodyad_add_user(samAccountName='NewUser', newpass='NewUserPass123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_add_user(samAccountName='NewUser', newpass='NewUserPass123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 ```
 
 ---
@@ -105,32 +113,14 @@ print(default_api.bloodyad_get_search(base='DC=fluffy,DC=htb', filter='(objectCl
 ## Arquitectura
 
 ```
-Claude Desktop → MCP Gateway → bloodyad-assistant MCP Server → bloodyAD CLI
+Gemini-CLI → MCP Gateway → bloodyad-assistant MCP Server → bloodyAD CLI (Kali)
 ```
-
----
-
-## Desarrollo
-
-### Pruebas locales
-
-```bash
-python bloodyad_assistant_server.py
-echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | python bloodyad_assistant_server.py
-```
-
-### Añadir nuevas herramientas
-
-1. Edita `bloodyad_assistant_server.py` y agrega la nueva función.
-2. Usa el decorador `@mcp.tool()`.
-3. Añade el nombre del tool en el catálogo MCP (`custom.yaml`).
-4. Reconstruye la imagen Docker.
 
 ---
 
 ## Troubleshooting
 
-- Si no aparecen los tools: revisa el build, logs, archivos YAML (`custom.yaml`, `registry.yaml`), y reinicia Claude Desktop.
+- Si no aparecen los tools: revisa el build, logs, archivos YAML (`custom.yaml`, `registry.yaml`), y reinicia Claude Desktop / Gemini-CLI.
 - Si fallan los comandos bloodyAD: revisa los argumentos (host, dominio, usuario, clave), VPN, reachability a la máquina destino y la versión de bloodyAD.
 
 ---
