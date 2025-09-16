@@ -61,17 +61,45 @@ Este servidor expone comandos de bloodyAD mediante funciones Python simples, fac
 
 ## Prerrequisitos
 
-- Docker Desktop con MCP Toolkit activado
-- Plugin CLI Docker MCP (`docker mcp`)
-- Internet durante el build (para clonar bloodyAD)
-- Acceso VPN/red al DC objetivo
+Antes de comenzar, asegúrate de tener lo siguiente:
+
+-   **Docker Desktop:** Instalado y ejecutándose en tu sistema.
+-   **MCP Toolkit:** Habilitado dentro de Docker Desktop.
+-   **Asistente de IA:** Un asistente de IA que soporte MCP, como Gemini-CLI o Claude Desktop.
+-   **Acceso a Internet:** Requerido durante el proceso de construcción de la imagen Docker para clonar bloodyAD.
+-   **Acceso VPN/Red:** Al controlador de dominio (DC) de Active Directory objetivo.
+-   **`jq` (para usuarios de Linux):** Un procesador JSON de línea de comandos ligero y flexible. Si estás en Linux, es posible que necesites instalarlo:
+    *   **Debian/Ubuntu:** `sudo apt-get install jq`
+    *   **Fedora:** `sudo dnf install jq`
+    *   **Arch Linux:** `sudo pacman -S jq`
 
 ---
 
-## Instalación
+## Instalación y Configuración
 
-Sigue los pasos detallados en el instructivo oficial (ver sección 2: instalación).
-Construye la imagen Docker y configúrala como MCP server personalizado.
+Sigue estos pasos para configurar y ejecutar el servidor `bloodyad-mcp`:
+
+1.  **Clonar el Repositorio:**
+    ```bash
+    git clone https://github.com/dcollaoa/bloodyad-mcp.git
+    cd bloodyad-mcp
+    ```
+
+2.  **Ejecutar el Script de Configuración:**
+    Ejecuta el script apropiado para tu sistema operativo. Estos scripts construirán la imagen Docker, configurarán el catálogo MCP y actualizarán tu configuración de Gemini.
+
+    *   **Para Usuarios de Windows:**
+        ```powershell
+        .\run.ps1
+        ```
+        Este script te guiará a través de la construcción de la imagen Docker, la configuración de MCP y la actualización del archivo `settings.json` de Gemini.
+
+    *   **Para Usuarios de Linux (o WSL):**
+        ```bash
+        chmod +x run.sh
+        ./run.sh
+        ```
+        Este script realizará los mismos pasos de configuración que el script de PowerShell. Recuerda hacerlo ejecutable primero.
 
 ---
 
@@ -113,26 +141,26 @@ print(default_api.bloodyad_add_user(samAccountName='NewUser', newpass='NewUserPa
 ## Arquitectura
 
 ```
-Gemini-CLI → MCP Gateway → bloodyad-mcp → bloodyAD CLI (Kali)
+Asistente de IA (Gemini-CLI/Claude Desktop) → MCP Gateway → bloodyad-mcp → bloodyAD CLI (Kali)
 ```
 
 ---
 
-## Troubleshooting
+## Solución de Problemas
 
-- Si no aparecen los tools: revisa el build, logs, archivos YAML (`custom.yaml`, `registry.yaml`), y reinicia Claude Desktop / Gemini-CLI.
-- Si fallan los comandos bloodyAD: revisa los argumentos (host, dominio, usuario, clave), VPN, reachability a la máquina destino y la versión de bloodyAD.
+- Si las herramientas no aparecen: revisa la construcción, los logs, los archivos YAML (`custom.yaml`, `registry.yaml`) y reinicia tu Asistente de IA.
+- Si los comandos de bloodyAD fallan: revisa los argumentos (host, dominio, usuario, contraseña), la VPN, la accesibilidad a la máquina destino y la versión de bloodyAD.
 
 ---
 
 ## Consideraciones de Seguridad
 
-- Las credenciales se pasan en cada comando, no se almacenan ni se loguean.
-- El server corre como usuario no-root en Docker.
-- El output es texto plano, igual al de bloodyAD, sin emojis ni formato markdown adicional.
+- Las credenciales se pasan con cada comando, no se almacenan ni se registran.
+- El servidor se ejecuta como un usuario no-root en Docker.
+- La salida es texto plano, idéntica a la de bloodyAD, sin emojis ni formato markdown adicional.
 
 ---
 
 ## Licencia
 
-MIT License
+Licencia MIT

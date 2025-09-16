@@ -61,17 +61,45 @@
 
 ## 先决条件
 
-- 启用 MCP 工具包的 Docker Desktop
-- Docker MCP CLI 插件 (`docker mcp`)
-- 构建期间需要互联网（克隆 bloodyAD）
-- 对目标 DC 的 VPN/网络访问
+在开始之前，请确保您已具备以下条件：
+
+-   **Docker Desktop:** 已安装并在您的系统上运行。
+-   **MCP Toolkit:** 在 Docker Desktop 中已启用。
+-   **AI 助手:** 支持 MCP 的 AI 助手，例如 Gemini-CLI 或 Claude Desktop。
+-   **互联网访问:** 在 Docker 镜像构建过程中克隆 bloodyAD 所需。
+-   **VPN/网络访问:** 到目标 Active Directory 域控制器 (DC)。
+-   **`jq` (适用于 Linux 用户):** 一个轻量级且灵活的命令行 JSON 处理器。如果您使用的是 Linux，可能需要安装它：
+    *   **Debian/Ubuntu:** `sudo apt-get install jq`
+    *   **Fedora:** `sudo dnf install jq`
+    *   **Arch Linux:** `sudo pacman -S jq`
 
 ---
 
-## 安装
+## 安装和设置
 
-请遵循官方指南中的详细步骤（参见第 2 节：安装）。
-构建 Docker 镜像并将其配置为自定义 MCP 服务器。
+请按照以下步骤设置和运行 `bloodyad-mcp` 服务器：
+
+1.  **克隆仓库:** 
+    ```bash
+    git clone https://github.com/dcollaoa/bloodyad-mcp.git
+    cd bloodyad-mcp
+    ```
+
+2.  **运行设置脚本:** 
+    执行适用于您操作系统的脚本。这些脚本将构建 Docker 镜像，配置 MCP 目录，并更新您的 Gemini 设置。
+
+    *   **对于 Windows 用户:** 
+        ```powershell
+        .\run.ps1
+        ```
+        此脚本将指导您完成 Docker 镜像构建、MCP 配置和 Gemini `settings.json` 更新。
+
+    *   **对于 Linux (或 WSL) 用户):** 
+        ```bash
+        chmod +x run.sh
+        ./run.sh
+        ```
+        此脚本将执行与 PowerShell 脚本相同的设置步骤。请记住先使其可执行。
 
 ---
 
@@ -84,28 +112,28 @@
 print(default_api.bloodyad_raw(cli_args="-h"))
 
 # 获取对象属性（例如，域的 objectSid）
-print(default_api.bloodyad_get_object(target='DC=fluffy,DC=htb', attr='objectSid', user='fluffy.htb\\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_get_object(target='DC=fluffy,DC=htb', attr='objectSid', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # 列出域的子对象
-print(default_api.bloodyad_get_children(target='DC=fluffy,DC=htb', otype='domain', user='fluffy.htb\\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_get_children(target='DC=fluffy,DC=htb', otype='domain', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # 转储区域的 DNS 记录
-print(default_api.bloodyad_get_dnsdump(zone='fluffy.htb', user='fluffy.htb\\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_get_dnsdump(zone='fluffy.htb', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # 获取用户的组成员资格
-print(default_api.bloodyad_get_membership(target='svc_mssql', user='fluffy.htb\\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_get_membership(target='svc_mssql', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # 列出经过身份验证的用户可写入的对象
-print(default_api.bloodyad_get_writable(user='fluffy.htb\\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_get_writable(user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # 执行高级 LDAP 搜索
-print(default_api.bloodyad_get_search(base='DC=fluffy,DC=htb', filter='(objectClass=user)', attr='sAMAccountName', user='fluffy.htb\\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_get_search(base='DC=fluffy,DC=htb', filter='(objectClass=user)', attr='sAMAccountName', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # 更改用户密码
-# print(default_api.bloodyad_set_password(target='CN=TestUser,CN=Users,DC=fluffy,DC=htb', newpass='NewSecurePassword123!', user='fluffy.htb\\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_set_password(target='CN=TestUser,CN=Users,DC=fluffy,DC=htb', newpass='NewSecurePassword123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
 # 添加新用户
-# print(default_api.bloodyad_add_user(samAccountName='NewUser', newpass='NewUserPass123!', user='fluffy.htb\\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
+print(default_api.bloodyad_add_user(samAccountName='NewUser', newpass='NewUserPass123!', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 ```
 
 ---
@@ -113,14 +141,14 @@ print(default_api.bloodyad_get_search(base='DC=fluffy,DC=htb', filter='(objectCl
 ## 架构
 
 ```
-Gemini-CLI → MCP Gateway → bloodyad-mcp → bloodyAD CLI (Kali)
+AI 助手 (Gemini-CLI/Claude Desktop) → MCP 网关 → bloodyad-mcp → bloodyAD CLI (Kali)
 ```
 
 ---
 
 ## 故障排除
 
-- 如果工具未显示：检查构建、日志、YAML 文件（`custom.yaml`、`registry.yaml`），并重新启动 Claude Desktop / Gemini-CLI。
+- 如果工具未显示：检查构建、日志、YAML 文件（`custom.yaml`、`registry.yaml`），并重新启动您的 AI 助手。
 - 如果 bloodyAD 命令失败：检查参数（主机、域、用户、密码）、VPN、目标机器的可达性以及 bloodyAD 版本。
 
 ---
@@ -135,4 +163,4 @@ Gemini-CLI → MCP Gateway → bloodyad-mcp → bloodyAD CLI (Kali)
 
 ## 许可证
 
-MIT License
+MIT 许可证

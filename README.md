@@ -6,18 +6,19 @@
 [README (English)](README.md) | [中文文档 (Chinese)](README_zh.md) | [README en Español](README_es.md)
 
 
-
 # bloodyad-mcp
 
 A Model Context Protocol (MCP) server that acts as a wrapper for bloodyAD, allowing flexible and automated Active Directory enumeration and abuse from Claude Desktop, Gemini-CLI, or other MCP frontends.
 
 ---
 
+
 ## Purpose
 
 This server exposes bloodyAD commands through simple Python functions, facilitating the enumeration, extraction, and abuse of Active Directory objects directly from your AI assistant or MCP environment, without the need to manually execute the bloodyAD CLI.
 
 ---
+
 
 ## Features
 
@@ -60,22 +61,52 @@ This server exposes bloodyAD commands through simple Python functions, facilitat
 
 ---
 
+
 ## Prerequisites
 
-- Docker Desktop with MCP Toolkit enabled
-- Docker MCP CLI Plugin (`docker mcp`)
-- Internet during build (to clone bloodyAD)
-- VPN/network access to the target DC
+Before you begin, ensure you have the following:
+
+-   **Docker Desktop:** Installed and running on your system.
+-   **MCP Toolkit:** Enabled within Docker Desktop.
+-   **AI Assistant:** An AI assistant that supports MCP, such as Gemini-CLI or Claude Desktop.
+-   **Internet Access:** Required during the Docker image build process to clone bloodyAD.
+-   **VPN/Network Access:** To the target Active Directory Domain Controller (DC).
+-   **`jq` (for Linux users):** A lightweight and flexible command-line JSON processor. If you are on Linux, you might need to install it:
+    *   **Debian/Ubuntu:** `sudo apt-get install jq`
+    *   **Fedora:** `sudo dnf install jq`
+    *   **Arch Linux:** `sudo pacman -S jq`
 
 ---
 
-## Installation
 
-Follow the detailed steps in the official guide (see section 2: installation).
-Build the Docker image and configure it as a custom MCP server.
+## Installation and Setup
 
+Follow these steps to set up and run the `bloodyad-mcp` server:
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/dcollaoa/bloodyad-mcp.git
+    cd bloodyad-mcp
+    ```
+
+2.  **Run the Setup Script:**
+    Execute the appropriate script for your operating system. These scripts will build the Docker image, configure the MCP catalog, and update your Gemini settings.
+
+    *   **For Windows Users:**
+        ```powershell
+        .\run.ps1
+        ```
+        This script will guide you through the Docker image build, MCP configuration, and Gemini `settings.json` update.
+
+    *   **For Linux (or WSL) Users:**
+        ```bash
+        chmod +x run.sh
+        ./run.sh
+        ```
+        This script will perform the same setup steps as the PowerShell script. Remember to make it executable first.
 
 ---
+
 
 ## Usage Examples
 
@@ -112,20 +143,23 @@ print(default_api.bloodyad_add_user(samAccountName='NewUser', newpass='NewUserPa
 
 ---
 
+
 ## Architecture
 
 ```
-Gemini-CLI → MCP Gateway → bloodyad-mcp → bloodyAD CLI (Kali)
+AI Assistant (Gemini-CLI/Claude Desktop) → MCP Gateway → bloodyad-mcp → bloodyAD CLI (Kali)
 ```
 
 ---
 
+
 ## Troubleshooting
 
-- If tools do not appear: check the build, logs, YAML files (`custom.yaml`, `registry.yaml`), and restart Claude Desktop / Gemini-CLI.
+- If tools do not appear: check the build, logs, YAML files (`custom.yaml`, `registry.yaml`), and restart your AI Assistant.
 - If bloodyAD commands fail: check arguments (host, domain, user, password), VPN, reachability to the target machine, and bloodyAD version.
 
 ---
+
 
 ## Security Considerations
 
@@ -135,7 +169,7 @@ Gemini-CLI → MCP Gateway → bloodyad-mcp → bloodyAD CLI (Kali)
 
 ---
 
+
 ## License
 
 MIT License
-
