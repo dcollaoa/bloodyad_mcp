@@ -84,19 +84,42 @@ set_mcp_configuration() {
         write_status "'custom.yaml' copied to destination."
     fi
 
-    if [ ! -f "$registry_yaml" ]; then
-        touch "$registry_yaml"
-    fi
-    
-    if grep -q "bloodyad-mcp:" "$registry_yaml"; then
-        write_status "Entry for 'bloodyad-mcp' already exists in registry.yaml." "Warning"
+    local registry_yaml_src="$(dirname "$0")"/registry.yaml # Source registry.yaml from project
+    local registry_yaml_dst="${mcp_root}/registry.yaml" # Destination registry.yaml on host
+
+    # Define the bloodyad-mcp entry to be inserted
+    # Extracting the specific lines from the project's registry.yaml
+    BLOODYAD_MCP_ENTRY=$(awk '
+/^  bloodyad-mcp:/ {
+    print $0;
+    found = 1;
+    next;
+}
+found && /^    / {
+    print $0;
+    next;
+}
+found && !/^    / {
+    found = 0;
+}
+' "${registry_yaml_src}")
+
+    if [ ! -f "$registry_yaml_dst" ]; then
+        cp "${registry_yaml_src}" "${registry_yaml_dst}"
+        write_status "'registry.yaml' copied to destination as it did not exist."
     else
-        if grep -q "^registry:" "$registry_yaml"; then
-            sed -i "/^registry:/a \n  bloodyad-mcp:\n    ref: \"\"" "$registry_yaml"
+        if grep -q "bloodyad-mcp:" "$registry_yaml_dst"; then
+            write_status "Entry for 'bloodyad-mcp' already exists in registry.yaml." "Warning"
         else
-            echo -e "\nregistry:\n  bloodyad-mcp:\n    ref: \"\"" >> "$registry_yaml"
+            if ! grep -q "^registry:" "$registry_yaml_dst"; then
+                cp "${registry_yaml_src}" "${registry_yaml_dst}"
+                write_status "'registry.yaml' was empty or invalid and has been overwritten."
+            else
+                echo "" >> "$registry_yaml_dst"
+                echo "${BLOODYAD_MCP_ENTRY}" >> "$registry_yaml_dst"
+                write_status "'bloodyad-mcp' entry added to existing registry.yaml."
+            fi
         fi
-        write_status "'registry.yaml' has been patched successfully."
     fi
 }
 

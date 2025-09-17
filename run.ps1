@@ -100,26 +100,35 @@ function Set-McpConfiguration {
         Write-Status "'custom.yaml' copied to destination."
     }
 
-    if (-not (Test-Path $RegistryYaml)) {
-        New-Item -Path $RegistryYaml -ItemType File -Value "" -Force | Out-Null
-    }
-    
-    $regContent = Get-Content $RegistryYaml -Raw
-    if ($regContent -match 'bloodyad-mcp:') {
-        Write-Status "Entry for 'bloodyad-mcp' already exists in registry.yaml." -Status 'Warning'
-    } else {
-        $bloodyAdEntry = @"
+    $RegistryYamlSrc = Join-Path $PSScriptRoot "registry.yaml" # Source registry.yaml from project
+    $RegistryYamlDst = Join-Path $McpRoot "registry.yaml" # Destination registry.yaml on host
 
-  bloodyad-mcp:
-    ref: ""
-"@
-        if ($regContent -match 'registry:') {
-            $newContent = $regContent -replace '(?m)^registry:', "registry:$bloodyAdEntry"
+    # Define the bloodyad-mcp entry to be inserted
+    $ProjectRegistryContent = Get-Content $RegistryYamlSrc -Raw
+    $BloodyAdMcpEntryMatch = $ProjectRegistryContent | Select-String -Pattern "(?m)^  bloodyad-mcp:\s*\n((?: {4}.*\n)*)" -AllMatches
+    if ($BloodyAdMcpEntryMatch.Matches.Count -gt 0) {
+        $BloodyAdMcpEntry = "  bloodyad-mcp:`n" + $BloodyAdMcpEntryMatch.Matches[0].Groups[1].Value.TrimEnd()
+    } else {
+        Write-Status "Error: Could not find 'bloodyad-mcp' entry in project's registry.yaml or regex failed to match." -Status 'Failed'
+        exit 1
+    }
+
+    if (-not (Test-Path $RegistryYamlDst)) {
+        Copy-Item -Path $RegistryYamlSrc -Destination $RegistryYamlDst -Force
+        Write-Status "'registry.yaml' copied to destination as it did not exist."
+    } else {
+        $RegContent = Get-Content $RegistryYamlDst -Raw
+        if ($RegContent -match 'bloodyad-mcp:') {
+            Write-Status "Entry for 'bloodyad-mcp' already exists in registry.yaml." -Status 'Warning'
         } else {
-            $newContent = $regContent + "`nregistry:$bloodyAdEntry"
+            if (($RegContent.Trim() -eq "") -or ($RegContent -notmatch '^registry:')) {
+                Copy-Item -Path $RegistryYamlSrc -Destination $RegistryYamlDst -Force
+                Write-Status "'registry.yaml' was empty or invalid and has been overwritten."
+            } else {
+                Add-Content -Path $RegistryYamlDst -Value ("`n" + $BloodyAdMcpEntry)
+                Write-Status "'bloodyad-mcp' entry added to existing registry.yaml."
+            }
         }
-        Set-Content -Path $RegistryYaml -Value $newContent.Trim()
-        Write-Status "'registry.yaml' has been patched successfully."
     }
 }
 

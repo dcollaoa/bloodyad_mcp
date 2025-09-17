@@ -1,0 +1,31 @@
+1. el registry.yaml está mal parchado lo revisé y queda asi:
+registry
+
+  deepwiki:
+    ref: ""
+  fetch:
+    ref: ""
+  obsidian:
+    ref: ""
+
+falto agregarse.
+
+
+2. --- Step 2: Configuring MCP catalog and registry ---
+> Success: 'custom.yaml' copied to destination.
+No se puede indizar en una matriz nula.
+En E:\Other Projects\MCPBloodyAD\run.ps1: 110 Carácter: 5
++     $BloodyAdMcpEntry = ($CustomYamlContent | Select-String -Pattern  ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : NullArray
+
+
+ no esta mal, recuerda... creo que no entiendes , debes usar el registry.yaml que esta en el            │
+│   proyecto y ese copiarlo en la ruta SI ESTE ARCHIVO NO EXISTE, pero si el ARCHIVO SI EXSITE; EN         │
+│   ESE CASO DEBES AGREGAR  
+
+  bloodyad-mcp:
+    ref: ""
+
+al registry existente!!!
