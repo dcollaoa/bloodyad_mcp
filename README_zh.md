@@ -83,7 +83,7 @@
 
 1.  **克隆仓库:** 
     ```bash
-    git clone https://github.com/dcollaoa/bloodyad-mcp.git
+    git clone https://github.com/dcollaoa/bloodyad_mcp.git
     cd bloodyad-mcp
     ```
 

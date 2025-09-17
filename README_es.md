@@ -83,7 +83,7 @@ Sigue estos pasos para configurar y ejecutar el servidor `bloodyad-mcp`:
 
 1.  **Clonar el Repositorio:**
     ```bash
-    git clone https://github.com/dcollaoa/bloodyad-mcp.git
+    git clone https://github.com/dcollaoa/bloodyad_mcp.git
     cd bloodyad-mcp
     ```
 
