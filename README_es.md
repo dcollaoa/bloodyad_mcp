@@ -79,6 +79,14 @@ Antes de comenzar, asegúrate de tener lo siguiente:
 
 ## Instalación y Configuración
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=kqtTcQAe1CQ">
+    <img src="media/video.png" alt="Video Tutorial">
+  </a>
+  <br>
+  <em>Haz clic en la imagen para ver el video tutorial de instalación.</em>
+</p>
+
 Sigue estos pasos para configurar y ejecutar el servidor `bloodyad-mcp`:
 
 1.  **Clonar el Repositorio:**

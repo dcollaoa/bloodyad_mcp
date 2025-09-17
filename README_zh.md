@@ -79,7 +79,15 @@
 
 ## 安装和设置
 
-请按照以下步骤设置和运行 `bloodyad-mcp` 服务器：
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=kqtTcQAe1CQ">
+    <img src="media/video.png" alt="视频教程">
+  </a>
+  <br>
+  <em>点击图片观看安装教程视频。</em>
+</p>
+
+请按照以下步骤设置和运行 `bloodyad-mcp` 服务器:
 
 1.  **克隆仓库:** 
     ```bash
