@@ -148,6 +148,7 @@ function Update-GeminiSettings {
             command = "docker"
             args    = @(
                 "run", "-i", "--rm",
+                "-e", "NODE_NO_WARNINGS=1",
                 "-v", "//var/run/docker.sock:/var/run/docker.sock",
                 "-v", "${McpPath}:/mcp",
                 "docker/mcp-gateway",
