@@ -1,0 +1,9 @@
+# Python build artifacts
+__pycache__/
+*.pyc
+
+# Virtual environment mentioned in Dockerfile
+/venv/
+
+# Local research folder as requested
+/research/
