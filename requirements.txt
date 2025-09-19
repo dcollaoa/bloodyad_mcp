@@ -1,2 +1,3 @@
 mcp[cli]>=1.2.0
 httpx
+bloodyAD @ git+https://github.com/CravateRouge/bloodyAD.git
