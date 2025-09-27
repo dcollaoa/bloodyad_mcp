@@ -2,7 +2,6 @@
 
 - The server only wraps bloodyAD, no extra tools.
 - Each MCP tool is a wrapper to a common bloodyAD operation (get object, get children, etc).
-- There's a raw wrapper (`bloodyad_raw`) for advanced/unknown/edge-case usage.
 - All tools return output as plain text (no emojis, no Markdown).
 - All parameters default to "", never None.
 - All tools sanitize/strip parameters and validate presence of required ones.
@@ -14,7 +13,6 @@
 ## Tool List
 
 ### Get Operations
-- `bloodyad_raw`: Run a raw bloodyAD CLI command, space-separated, for advanced usage.
 - `bloodyad_get_object`: Get LDAP object attributes (optionally resolve SD) via bloodyAD.
 - `bloodyad_get_children`: List child objects of a target (user, group, computer, etc) via bloodyAD.
 - `bloodyad_get_dnsdump`: Dump AD-integrated DNS zones using bloodyAD.
@@ -22,6 +20,7 @@
 - `bloodyad_get_writable`: List writable objects for the user (optionally filtered by otype/right) via bloodyAD.
 - `bloodyad_get_search`: Search in LDAP database via bloodyAD.
 - `bloodyad_get_trusts`: Display trusts in an ascii tree via bloodyAD.
+- `bloodyad_get_bloodhound`: BloodHound CE collector via bloodyAD.
 
 ### Set Operations
 - `bloodyad_set_object`: Add/Replace/Delete target's attribute via bloodyAD.
@@ -39,6 +38,7 @@
 - `bloodyad_add_shadowCredentials`: Adds Key Credentials to target via bloodyAD.
 - `bloodyad_add_uac`: Adds property flags altering user/computer object behavior via bloodyAD.
 - `bloodyad_add_user`: Adds a new user via bloodyAD.
+- `bloodyad_add_badSuccessor`: Adds a bad successor to the dMSA.
 
 ### Remove Operations
 - `bloodyad_remove_dcsync`: Removes DCSync right for provided trustee via bloodyAD.
@@ -52,7 +52,6 @@
 
 ## Recommended Usage
 
-- **`bloodyad_raw`**: Use for any direct bloodyAD CLI usage, especially for commands not covered by specific wrappers or for getting help (e.g., `bloodyAD -h`).
 - **`bloodyad_get_object`**: Retrieve specific attributes of an LDAP object (e.g., `objectSid` of a domain).
 - **`bloodyad_get_children`**: List child objects within a specified target (e.g., children of a domain).
 - **`bloodyad_get_dnsdump`**: Dump DNS records from an Active Directory integrated DNS zone.
@@ -60,8 +59,10 @@
 - **`bloodyad_get_writable`**: Identify objects that the authenticated user has write permissions over, optionally filtering by object type or specific rights.
 - **`bloodyad_get_search`**: Perform advanced LDAP searches with custom filters and base DNs.
 - **`bloodyad_get_trusts`**: Visualize Active Directory trusts.
+- **`bloodyad_get_bloodhound`**: BloodHound CE collector.
 - **`bloodyad_set_*` tools**: Modify existing Active Directory objects, such as changing attributes, ownership, or user passwords.
 - **`bloodyad_add_*` tools**: Create new objects or add specific rights/configurations (e.g., add a new computer, add a user to a group, add DCSync rights).
+- **`bloodyad_add_badSuccessor`**: Adds a bad successor to the dMSA.
 - **`bloodyad_remove_*` tools**: Delete objects or remove specific rights/configurations (e.g., remove a user from a group, remove DCSync rights).
 
 - Keep your bloodyAD up-to-date by rebuilding the Docker image.
@@ -70,11 +71,6 @@
 ## Examples
 
 Here are some examples of how to use the `bloodyad-mcp` tools:
-
-### Get bloodyAD help
-```python
-print(default_api.bloodyad_raw(cli_args="-h"))
-```
 
 ### Get object attributes (e.g., objectSid of the domain)
 ```python
