@@ -25,7 +25,6 @@ This server exposes bloodyAD commands through simple Python functions, facilitat
 ## Features
 
 ### Get Operations
-- **`bloodyad_raw`** — Executes any bloodyAD command as a string (maximum flexibility, advanced mode).
 - **`bloodyad_get_object`** — Retrieves LDAP object attributes, with an option to resolve SD.
 - **`bloodyad_get_children`** — Lists children of an object (users, groups, computers, OUs).
 - **`bloodyad_get_dnsdump`** — Extracts AD-integrated DNS zones.
@@ -33,6 +32,7 @@ This server exposes bloodyAD commands through simple Python functions, facilitat
 - **`bloodyad_get_writable`** — Lists objects over which the authenticated user has write permissions.
 - **`bloodyad_get_search`** — Performs advanced searches in the LDAP database.
 - **`bloodyad_get_trusts`** — Displays domain trusts in an ASCII tree.
+- **`bloodyad_get_bloodhound`** — BloodHound CE collector.
 
 ### Set Operations
 - **`bloodyad_set_object`** — Adds/Replaces/Deletes attributes of an object.
@@ -50,6 +50,7 @@ This server exposes bloodyAD commands through simple Python functions, facilitat
 - **`bloodyad_add_shadowCredentials`** — Adds Key Credentials (Shadow Credentials) to an object.
 - **`bloodyad_add_uac`** — Adds User Account Control (UAC) flags to an object.
 - **`bloodyad_add_user`** — Adds a new user.
+- **`bloodyad_add_badSuccessor`** — Adds a bad successor to the dMSA.
 
 ### Remove Operations
 - **`bloodyad_remove_dcsync`** — Removes the DCSync right for a trustee.
@@ -130,9 +131,6 @@ Follow these steps to set up and run the `bloodyad-mcp` server:
 You can launch in Claude Desktop, Gemini-CLI, etc.:
 
 ```python
-# Get bloodyAD help
-print(default_api.bloodyad_raw(cli_args="-h"))
-
 # Get object attributes (e.g., objectSid of the domain)
 print(default_api.bloodyad_get_object(target='DC=fluffy,DC=htb', attr='objectSid', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 

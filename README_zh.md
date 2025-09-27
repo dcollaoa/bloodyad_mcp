@@ -23,7 +23,6 @@
 ## 功能
 
 ### 获取操作 (Get Operations)
-- **`bloodyad_raw`** — 执行任何 bloodyAD CLI 命令字符串（最大灵活性，高级模式）。
 - **`bloodyad_get_object`** — 检索 LDAP 对象属性，可选择解析 SD。
 - **`bloodyad_get_children`** — 列出目标对象的子对象（用户、组、计算机、OU）。
 - **`bloodyad_get_dnsdump`** — 提取 AD 集成 DNS 区域。
@@ -31,6 +30,7 @@
 - **`bloodyad_get_writable`** — 列出经过身份验证的用户具有写入权限的对象。
 - **`bloodyad_get_search`** — 在 LDAP 数据库中执行高级搜索。
 - **`bloodyad_get_trusts`** — 以 ASCII 树形式显示域信任。
+- **`bloodyad_get_bloodhound`** — BloodHound CE 收集器。
 
 ### 设置操作 (Set Operations)
 - **`bloodyad_set_object`** — 添加/替换/删除对象的属性。
@@ -48,6 +48,7 @@
 - **`bloodyad_add_shadowCredentials`** — 将密钥凭据（Shadow Credentials）添加到对象。
 - **`bloodyad_add_uac`** — 将用户帐户控制 (UAC) 标志添加到对象。
 - **`bloodyad_add_user`** — 添加新用户。
+- **`bloodyad_add_badSuccessor`** — 将恶意后继者添加到 dMSA。
 
 ### 删除操作 (Remove Operations)
 - **`bloodyad_remove_dcsync`** — 删除受托人的 DCSync 权限。
@@ -126,9 +127,6 @@
 您可以在 Claude Desktop、Gemini-CLI 等中启动：
 
 ```python
-# 获取 bloodyAD 帮助
-print(default_api.bloodyad_raw(cli_args="-h"))
-
 # 获取对象属性（例如，域的 objectSid）
 print(default_api.bloodyad_get_object(target='DC=fluffy,DC=htb', attr='objectSid', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 

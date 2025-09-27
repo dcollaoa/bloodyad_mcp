@@ -23,7 +23,6 @@ Este servidor expone comandos de bloodyAD mediante funciones Python simples, fac
 ## Funcionalidades
 
 ### Operaciones Get (Obtener)
-- **`bloodyad_raw`** — Ejecuta cualquier comando bloodyAD en string (máxima flexibilidad, modo avanzado).
 - **`bloodyad_get_object`** — Recupera atributos LDAP de un objeto, opción de resolver SD.
 - **`bloodyad_get_children`** — Lista hijos de un objeto (users, groups, computers, OUs).
 - **`bloodyad_get_dnsdump`** — Extrae zonas DNS integradas en Active Directory.
@@ -31,6 +30,7 @@ Este servidor expone comandos de bloodyAD mediante funciones Python simples, fac
 - **`bloodyad_get_writable`** — Lista objetos sobre los que el usuario autenticado tiene permisos de escritura.
 - **`bloodyad_get_search`** — Realiza búsquedas avanzadas en la base de datos LDAP.
 - **`bloodyad_get_trusts`** — Muestra las confianzas (trusts) del dominio en un árbol ASCII.
+- **`bloodyad_get_bloodhound`** — Colector de BloodHound CE.
 
 ### Operaciones Set (Establecer)
 - **`bloodyad_set_object`** — Añade/Reemplaza/Elimina atributos de un objeto.
@@ -48,6 +48,7 @@ Este servidor expone comandos de bloodyAD mediante funciones Python simples, fac
 - **`bloodyad_add_shadowCredentials`** — Añade credenciales de clave (Shadow Credentials) a un objeto.
 - **`bloodyad_add_uac`** — Añade flags de control de cuenta de usuario (UAC) a un objeto.
 - **`bloodyad_add_user`** — Añade un nuevo usuario.
+- **`bloodyad_add_badSuccessor`** — Agrega un sucesor malicioso al dMSA.
 
 ### Operaciones Remove (Eliminar)
 - **`bloodyad_remove_dcsync`** — Elimina el derecho DCSync para un trustee.
@@ -125,9 +126,6 @@ Sigue estos pasos para configurar y ejecutar el servidor `bloodyad-mcp`:
 Puedes lanzar en Claude Desktop, Gemini-CLI, etc.:
 
 ```python
-# Obtener ayuda de bloodyAD
-print(default_api.bloodyad_raw(cli_args="-h"))
-
 # Obtener atributos de un objeto (ej. objectSid del dominio)
 print(default_api.bloodyad_get_object(target='DC=fluffy,DC=htb', attr='objectSid', user='fluffy.htb\svc_mssql', password='MssqlService01!', host='dc01.fluffy.htb'))
 
